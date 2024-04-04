@@ -1,0 +1,100 @@
+[{
+    "id": 1,
+    "empId" : "SIL-0743",
+    "name": "Bennie Ballintyne",
+    "email": "bballintyne0@nationalgeographic.com",
+    "gender": "Female",
+    "dob": "11/12/1997",
+    "joiningDate": "01/09/2021" ,
+    "skills": ["React","Html","css","javascript"],
+    "role" : 1
+  }, {
+    "id": 2,
+    "empId" : "SIL-0744",
+    "name": "Roman Luty",
+    "email": "rluty1@hc360.com",
+    "gender": "Male",
+    "dob": "11/12/1997",
+    "joiningDate":"01/09/2021",
+    "skills": ["React","Html","css","javascript"],
+    "role" : 2
+  }, {
+    "id": 3,
+    "name": "Jocelyne Jacqueme",
+    "empId" : "SIL-0745",
+    "email": "jjacqueme2@flickr.com",
+    "gender": "Female",
+    "dob": "11/12/1997",
+    "joiningDate": "01/09/2021",
+    "skills": ["React","Html","css","javascript"],
+    "role" : 3
+  }, {
+    "id": 4,
+    "name": "Edwina Tidd",
+    "empId" : "SIL-0746",
+    "email": "etidd3@naver.com",
+    "gender": "Female",
+    "dob": "11/12/1997",
+    "joiningDate": "01/09/2021",
+    "skills": ["React","Html","css","javascript"],
+    "role" : 3
+  }, {
+    "id": 5,
+    "empId" : "SIL-0747",
+    "name": "Alix Feechum",
+    "email": "afeechum4@toplist.cz",
+    "gender": "Male",
+    "dob": "11/12/1997",
+    "joiningDate": "01/09/2021",
+    "skills": ["React","Html","css","javascript"],
+    "role" : 3
+  }, {
+    "id": 6,
+    "empId" : "SIL-0748",
+    "name": "Pierre Nys",
+    "email": "pnys5@nasa.gov",
+    "gender": "Male",
+    "dob": "11/12/1997",
+    "skills": ["React","Html","css","javascript"],
+    "joiningDate": "01/09/2021",
+    "role" : 3
+  }, {
+    "id": 7,
+    "empId" : "SIL-0749",
+    "name": "Olivette Tremayle",
+    "email": "otremayle6@live.com",
+    "gender": "Female",
+    "dob": "11/12/1997",
+    "joiningDate": "01/09/2021",
+    "skills": ["React","Html","css","javascript"],
+    "role" : 3
+  }, {
+    "id": 8,
+    "empId" : "SIL-0750",
+    "name": "Terrell Mecozzi",
+    "email": "tmecozzi7@4shared.com",
+    "gender": "Male",
+    "dob": "11/12/1997",
+    "joiningDate": "01/09/2021",
+    "skills": ["React","Html","css","javascript"],
+    "role" : 3
+  }, {
+    "id": 9,
+    "empId" : "SIL-0751",
+    "name": "Abran Bendall",
+    "email": "abendall8@facebook.com",
+    "gender": "Male",
+    "dob": "11/12/1997",
+    "joiningDate": "01/09/2021",
+    "skills": ["React","Html","css","javascript"],
+    "role" : 3
+  }, {
+    "id": 10,
+    "empId" : "SIL-0752",
+    "name": "Nathaniel Cottem",
+    "email": "ncottem9@wix.com",
+    "gender": "Male",
+    "dob": "11/12/1997",
+    "joiningDate": "01/09/2021",
+    "role" : 3
+  }]
