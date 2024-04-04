@@ -5,7 +5,8 @@ import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import WorkOutlineRoundedIcon from '@mui/icons-material/WorkOutlineRounded';
 import Info3 from "../../../../assets/Info-Dp/img-3.jpg"
 import { updateProfile, update } from '../../../../api/userService';
-import {useSelector} from 'react-redux'
+import { addUser } from '../../../../Store/reducers/loginReducer';
+import {useSelector, useDispatch} from 'react-redux'
 import axios from 'axios';
 
 
@@ -29,11 +30,14 @@ const Info = ({userPostData,
               setUserName}) => {
 
                 const userData = useSelector((state) => state?.login?.users);
-
+console.log({userPostData})
   const [coverImg,setCoverImg] =useState(Info3)
 
   const importProfile=useRef()
   const importCover =useRef()
+
+  let dispatch = useDispatch();
+
 
   
   const handleFile1=(e)=>{
@@ -51,7 +55,8 @@ const Info = ({userPostData,
             "http://localhost:5000/api/updateProfileImages",
             formData
           );
-          console.log("res in profile info:",response.data)
+          console.log("res in profile info:",response.data);
+          dispatch(addUser(response.data.data))
         } catch (error) {
           console.error('Error fetching user data:', error);
         }
@@ -67,6 +72,25 @@ const Info = ({userPostData,
   const handleFile2 =(e)=>{
     if(e.target.files && e.target.files[0]){
       let img =e.target.files[0]
+      const formData = new FormData();
+      formData.append('my_file', img);
+      formData.append('email', userData.email);
+      console.log({userData});
+      const fetchData = async () => {
+        try {
+          // const response = await update(formData);
+          const response = await axios.put(
+            "http://localhost:5000/api/coverImage",
+            formData
+          );
+          console.log("res in profile info:",response.data)
+          dispatch(addUser(response.data.data))
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+  
+      fetchData();
       const imgObj ={image:URL.createObjectURL(img)}
       const coverImg =imgObj.image
       setCoverImg(coverImg)
@@ -97,14 +121,31 @@ const Info = ({userPostData,
     setOpenEdit(false)
   }
 
+  function formatDate(dateString) {
+  const dateParts = dateString.split('/');
+  const day = parseInt(dateParts[1], 10);
+  const month = parseInt(dateParts[0], 10);
+  const year = parseInt(dateParts[2], 10);
+  
+  const formattedDate = new Date(year, month - 1, day);
+  const options = { day: 'numeric', month: 'short', year: 'numeric' };
+  const formattedString = formattedDate.toLocaleDateString('en-GB', options);
+  
+  return formattedString.replace(/(\d+)(st|nd|rd|th)/, "$1<sup>$2</sup>");
+}
+
+function filterPostsByAuthor(posts, author) {
+  return posts.filter(post => post.Author === author);
+}
+
 
   return (
 
 
     <div className='info'>
         <div className="info-cover">
-            <img src={coverImg} alt="" />
-            <img src={profileImg} alt="" />
+            <img src={userData.ProfileImage1 || coverImg} alt="" />
+            <img src={userData.ProfileImage} alt="" />
             <div className='coverDiv'><IoCameraOutline className='coverSvg' onClick={()=>importCover.current.click()}/></div>
             <div className='profileDiv'><IoCameraOutline className='profileSvg' onClick={()=>importProfile.current.click()}/></div>
         </div>
@@ -164,13 +205,13 @@ const Info = ({userPostData,
 
               <div className="info-details-list">
                 <CalendarMonthRoundedIcon />
-                <span>Joined in 2023-08-12</span>
+                <span>Joined on {formatDate(userData.joiningDate)}</span>
               </div>
             </div>
 
             <div className="info-col-2">
               <div>
-                <h2>{userPostData.length}</h2>
+                <h2>{filterPostsByAuthor(userPostData,userData.empId).length}</h2>
                 <span>Posts</span>
               </div>
             </div>

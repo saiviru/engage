@@ -10,7 +10,7 @@ import ProfileImg from "../../assets/profile.jpg"
 const Profile = () => {
 
   let userData = useSelector((state) => state?.login?.users);
-
+  console.log({userData});
   const [following,setFollowing] =useState(3)
   const [search,setSearch] =useState("")
 

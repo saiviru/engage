@@ -1,5 +1,6 @@
 import Info from "./ProfileComponents/InfoProfile/Info";
 import UserHome from "../UserHome/UserHome";
+import { useSelector } from "react-redux";
 
 import Profile from "../../assets/profile.jpg";
 import img1 from "../../assets/User-post/img1.jpg";
@@ -27,17 +28,21 @@ const ProfileMiddle = ({
   setModelDetails,
 }) => {
 
-
+  let userData = useSelector((state) => state?.login?.users);
   const [userPostData, setUserPostData] = useState([]);
   const [body, setBody] = useState("");
   const [importFile, setImportFile] = useState("");
+
+  function filterPostsByAuthor(posts, author) {
+    return posts.filter(post => post.Author === author);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getAllPosts();
         if (response.data.length>0) {
-          setUserPostData(response.data)
+          setUserPostData(filterPostsByAuthor(response.data, userData.Author))
           // dispatch(loginSuccess());
           // dispatch(addUser(response.data));
           // navigate("/home");
