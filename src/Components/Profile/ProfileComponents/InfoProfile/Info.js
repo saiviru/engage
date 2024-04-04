@@ -110,7 +110,7 @@ const Info = ({userPostData,
               <BiLogOut />Logout
             </Link>
 
-            <button onClick={()=>setOpenEdit(true)}><LiaEdit />Edit Profile</button>
+            {/* <button onClick={()=>setOpenEdit(true)}><LiaEdit />Edit Profile</button> */}
             <ModelProfile 
             name={name}
             setName={setName}
@@ -146,16 +146,8 @@ const Info = ({userPostData,
 
             <div className="info-col-2">
               <div>
-                <h2>5,000</h2>
-                <span>Followers</span>
-              </div>
-              <div>
                 <h2>{userPostData.length}</h2>
                 <span>Posts</span>
-              </div>
-              <div>
-                <h2>{following}</h2>
-                <span>Following</span>
               </div>
             </div>
 

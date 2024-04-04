@@ -18,7 +18,7 @@ import { useNavigate } from "react-router";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 
-import { getUserById } from '../api/userService';
+import { getUserById } from '../../api/userService';
 
 
 
@@ -26,7 +26,7 @@ import {
   addUser,
   loginSuccess,
   logout,
-} from "../Store/reducers/loginReducer";
+} from "../../Store/reducers/loginReducer";
 
 function Copyright(props) {
   return (
@@ -62,13 +62,15 @@ export default function SignIn() {
       const fetchData = async () => {
         try {
           const response = await getUserById(requestBody);
+          console.log("res:",response.data)
           setUser(response.data);
-          if (result.data.status === "success") {
+          if (response.data.empId) {
             dispatch(loginSuccess());
             dispatch(addUser(response.data));
-            navigate("/dashboard");
+            navigate("/home");
           } else {
             dispatch(logout());
+            
           }
         } catch (error) {
           console.error('Error fetching user data:', error);

@@ -2,7 +2,7 @@
 import axiosInstance from './connect';
 
 export const getUserById = (userData) => {
-  return axiosInstance.post(`/login/`,userData);
+  return axiosInstance.post(`/login`,userData);
 };
 
 export const updateUser = (userId, userData) => {
