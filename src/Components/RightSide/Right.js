@@ -19,10 +19,10 @@ const Right = ({following,setFollowing,showMenu,setShowMenu}) => {
 
       <Online />
 
-      <FollowingU 
+      {/* <FollowingU 
       following={following}
       setFollowing={setFollowing}
-      />
+      /> */}
     </div>
   )
 }
