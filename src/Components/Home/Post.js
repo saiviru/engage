@@ -131,7 +131,7 @@ const handleDelete=(id)=>{
                 <h2>{post.Author}</h2>
               </div>
             </Link>
-            <div className='delete'>
+            {/* <div className='delete'>
               {showDelete && (
                 <div className="options">
                   <button><PiSmileySad />Not Interested in this post</button>
@@ -142,7 +142,7 @@ const handleDelete=(id)=>{
                 </div>
               )}
               <MoreVertRoundedIcon className='post-vertical-icon' onClick={() => setShowDelete(!showDelete)} />
-            </div>
+            </div> */}
           </div>
           <p className='body'>{post.postDesc.length <= 300 ? post.postDesc : `${post.postDesc.slice(0, 300)}...`}</p> 
           {/* {post.img && <img src={post.img} alt="" className="post-img" />} */}
