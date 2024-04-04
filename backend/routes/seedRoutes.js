@@ -111,6 +111,11 @@ router.post('/seed/jobs', async (req, res) => {
   router.post('/login', async (req, res) => {
     const { email } = req.body; // Extract email from request body
   
+    // Check if email is provided in the request body
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required' });
+    }
+  
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
   
     try {
@@ -135,8 +140,8 @@ router.post('/seed/jobs', async (req, res) => {
     } finally {
       await client.close();
     }
-  });
-  
+});
+
 
 
 module.exports = router;
