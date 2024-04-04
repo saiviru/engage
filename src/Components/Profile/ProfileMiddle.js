@@ -39,6 +39,7 @@ const ProfileMiddle = ({
         console.log("respost:", response.data);
         if (response.data.length>0) {
           setUserPostData(response.data)
+          console.log("from pro:",response.data)
           // dispatch(loginSuccess());
           // dispatch(addUser(response.data));
           // navigate("/home");

@@ -9,6 +9,7 @@
 .commentHead{
     display: flex;
     gap: 15px;
+    flex-direction: column-reverse;
 }
 .commentList .commentList1{
     width: min-content;

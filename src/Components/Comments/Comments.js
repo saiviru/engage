@@ -5,8 +5,8 @@ import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 
 
 const Comments = ({cmt}) => {
-    const [booleonLike,setBooleonLike] =useState(false)
-    const [likeCount,setLikeCount] =useState(cmt.likes)
+
+    console.log("cmt",cmt[0].commentAuthors);
 
   return (
     <div className="overAllCommentList">
@@ -14,7 +14,12 @@ const Comments = ({cmt}) => {
             <div className='commentList1'>
                 <div className="commentHead">
                     {/* <div><img src={cmt.profilePic} /></div> */}
-                    <p><span>{cmt.username}</span>{cmt.comment}</p>
+                    {cmt[0].commentAuthors.map(comment => (
+                        <div>
+                            <p><span>{comment.author}</span>{comment.commentDesc}</p>
+                        </div>
+                    ))}
+                    
                 </div>
 
                 

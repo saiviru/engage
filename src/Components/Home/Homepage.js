@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Feedposts from './Feedposts'
 import "../Home/Homepage.css"
 
 
 const Homepage = ({posts,setPosts,setFriendsProfile,images}) => {
+  
   return (
     <main className='homepage'>
         

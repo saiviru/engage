@@ -13,6 +13,7 @@ import {IoVolumeMuteOutline} from "react-icons/io5"
 import {MdBlockFlipped} from "react-icons/md"
 import {AiOutlineDelete} from "react-icons/ai"
 import {MdReportGmailerrorred} from "react-icons/md"
+import { getAllPosts } from '../../api/postService';
 
 import {LiaFacebookF} from "react-icons/lia"
 import {FiInstagram} from "react-icons/fi"
@@ -30,41 +31,42 @@ import Comments from '../Comments/Comments';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
-const Post = ({post,setPosts,setFriendsProfile,images}) => {
-  const [posts,setPost] = useState([]);
+const Post = ({post,setPosts,setFriendsProfile,images, posts}) => {
+  console.log({posts})
+
   const [users,setUsers] = useState([]);
   const [comments,setComments] =useState([]);
 
-  useEffect(() => {
-      fetch('http://localhost:3000/api/posts')
-          .then(response => response.json())
-          .then(data => {
-            console.log({data});  
-            setPost(data);
-
-            const extractedComments = data.reduce((acc, post) => {
-              return acc.concat(post.comments.map(comment => {
-                  return {
-                      //id: comment.commentAuthors[0].author, // You can set a unique id for each comment based on author or use any other unique identifier
-                      //profilePic: 'profilePicURL', // Replace 'profilePicURL' with the actual URL of the profile picture
-                      //likes: post.postLikeCount, // Assuming likes for each comment are the same as the post likes
-                      username: comment.commentAuthors[0].author, // Assuming username is the same as the comment author
-                      //time: 'Now', // You can set the time as per your requirement
-                      comment: comment.commentAuthors[0].commentDesc // Assuming only one comment description per comment
-                  };
-              }));
-          }, []);
-
-          // Update the comments state with the extracted comments
-          setComments(extractedComments);
-          });
-  }, []);
+  const extractComments = (posts) => {
+    const extractedComments = [];
+    posts.forEach(post => {
+      if (post.comments && post.comments.length > 0) {
+        post.comments.forEach(comment => {
+          extractedComments.push(comment);
+        });
+      }
+    });
+    setComments(extractedComments);
+    return extractedComments;
+  };
 
   useEffect(() => {
-      fetch('http://localhost:3000/api/users')
-          .then(response => response.json())
-          .then(data => console.log(data));
-  }, []);
+    const extractedComments = extractComments(posts);
+    setComments(extractedComments);
+  }, [posts]);
+    // const extractedComments = posts.reduce((acc, post) => {
+    //         return acc.concat(post.comments.map(comment => {
+    //             return {
+    //                 //id: comment.commentAuthors[0].author, // You can set a unique id for each comment based on author or use any other unique identifier
+    //                 //profilePic: 'profilePicURL', // Replace 'profilePicURL' with the actual URL of the profile picture
+    //                 //likes: post.postLikeCount, // Assuming likes for each comment are the same as the post likes
+    //                 username: comment.commentAuthors[0].author, // Assuming username is the same as the comment author
+    //                 //time: 'Now', // You can set the time as per your requirement
+    //                 comment: comment.commentAuthors[0].commentDesc // Assuming only one comment description per comment
+    //             };
+    //         }));
+    //     }, []);
+    //     setComments(extractedComments)
 
 
   const [like,setLike] =useState(post.like)
@@ -114,20 +116,13 @@ const handleDelete=(id)=>{
     setComments(insert)
     setCommentInput("")
   }
-
    const handleFriendsId=(id)=>{
       const friendsIdFilter = posts.filter(val => val.id === id)
       setFriendsProfile(friendsIdFilter)
    }
-
    const [socialIcons,setSocialIcons] = useState(false)
-
-
-
-
   return (
     <div>
-      {posts.map(post => (
         <div className='post' key={post.id}>
           <div className='post-header'>
             <Link to="/FriendsId" style={{ textDecoration: "none" }}>
@@ -179,16 +174,13 @@ const handleDelete=(id)=>{
                     </div>
                   </form>
                   <div className="sticky">
-                    {comments.map((cmt) => (
-                      <Comments className="classComment" cmt={cmt} key={cmt.id} />
-                    ))}
+                      <Comments className="classComment" cmt={post.comments} />
                   </div>
                 </div>
               )}
             </div>
           </div>
         </div>
-      ))}
     </div>
   )
 }
