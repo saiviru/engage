@@ -3,6 +3,8 @@ const router = express.Router();
 const { MongoClient } = require('mongodb');
 const fs = require('fs');
 const cloudinary = require('cloudinary').v2;
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 cloudinary.config({
     cloud_name: 'dmark8mtj',
@@ -214,6 +216,17 @@ router.get('/jobs', async (req, res) => {
     } finally {
         await client.close();
     }
+});
+
+router.put('/upload', upload.single('image'), async (req, res) => {
+  console.log("upload,",req)
+  try {
+    const result = await cloudinary.uploader.upload(req.file.path);
+    res.json({ imageUrl: result.secure_url });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred' });
+  }
 });
 
 
