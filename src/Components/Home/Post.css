@@ -25,7 +25,7 @@
     align-items: center;
     cursor: pointer;
     gap: 28px;
-    color: orangered;
+    color: #253f51;
     position: relative;
     width: 100%;
 }
@@ -187,11 +187,11 @@
     top: 50%;
     left: 25px;
     transform: translate(-50%,-50%);
-    color: orangered;
+    color: #253f51;
 }
 .cmtGroup .send{
     margin-left: 10px;
-    color: orangered;
+    color: #253f51;
 }
 .cmtGroup button{
     border: none;
