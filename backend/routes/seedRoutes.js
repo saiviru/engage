@@ -142,6 +142,60 @@ router.post('/seed/jobs', async (req, res) => {
     }
 });
 
+// GET endpoint to fetch users
+router.get('/users', async (req, res) => {
+    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+    try {
+        await client.connect();
+        const database = client.db(dbName);
+        const collection = database.collection(usersCollectionName);
+
+        // Find all users in the collection
+        const users = await collection.find({}).toArray();
+
+        if (users.length > 0) {
+            // If users found, send them in the response
+            res.status(200).json(users);
+        } else {
+            // If no users found, return an empty array
+            res.status(404).json({ message: 'No users found' });
+        }
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    } finally {
+        await client.close();
+    }
+});
+
+
+// GET endpoint to fetch jobs
+router.get('/jobs', async (req, res) => {
+    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+    try {
+        await client.connect();
+        const database = client.db(dbName);
+        const collection = database.collection(jobsCollectionName);
+
+        // Find all jobs in the collection
+        const jobs = await collection.find({}).toArray();
+
+        if (jobs.length > 0) {
+            // If jobs found, send them in the response
+            res.status(200).json(jobs);
+        } else {
+            // If no jobs found, return an empty array
+            res.status(404).json({ message: 'No jobs found' });
+        }
+    } catch (error) {
+        console.error('Error fetching jobs:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    } finally {
+        await client.close();
+    }
+});
 
 
 module.exports = router;
