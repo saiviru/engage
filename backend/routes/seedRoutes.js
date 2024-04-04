@@ -4,7 +4,6 @@ const { MongoClient } = require('mongodb');
 const fs = require('fs');
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
 
 cloudinary.config({
     cloud_name: 'dmark8mtj',
@@ -12,6 +11,11 @@ cloudinary.config({
     api_secret: '9HugmB-7htSK0RrcYfvq6UQJRj4',
   });
   const image = './public/image.jpg';
+  const storage = new multer.memoryStorage();
+const upload = multer({
+  storage,
+});
+
 // Connection URI
 const uri = 'mongodb+srv://sagarsoft:sagarsoft@cluster0.eesz4vc.mongodb.net/';
 const dbName = 'employee-engage';
@@ -218,16 +222,27 @@ router.get('/jobs', async (req, res) => {
     }
 });
 
-router.put('/upload', upload.single('image'), async (req, res) => {
-  console.log("upload,",req)
+router.post("/upload", upload.single("my_file"), async (req, res) => {
+  console.log({res})
   try {
-    const result = await cloudinary.uploader.upload(req.file.path);
-    res.json({ imageUrl: result.secure_url });
+    const b64 = Buffer.from(req.file.buffer).toString("base64");
+    let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+    const cldRes = await handleUpload(dataURI);
+    res.json(cldRes);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'An error occurred' });
+    console.log(error);
+    res.send({
+      message: error.message,
+    });
   }
 });
+
+async function handleUpload(file) {
+  const res = await cloudinary.uploader.upload(file, {
+    resource_type: "auto",
+  });
+  return res;
+}
 
 
 router.put('/updateProfileImages', async (req, res) => {

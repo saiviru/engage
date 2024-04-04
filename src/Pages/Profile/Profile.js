@@ -30,7 +30,6 @@ const Profile = () => {
       ModelJobName: userData.jobRole || "Developer"
     }
   )
-    console.log("checking",userData)
   return (
     <div className='interface'>
         <Nav

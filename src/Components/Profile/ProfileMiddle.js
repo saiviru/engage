@@ -36,10 +36,8 @@ const ProfileMiddle = ({
     const fetchData = async () => {
       try {
         const response = await getAllPosts();
-        console.log("respost:", response.data);
         if (response.data.length>0) {
           setUserPostData(response.data)
-          console.log("from pro:",response.data)
           // dispatch(loginSuccess());
           // dispatch(addUser(response.data));
           // navigate("/home");

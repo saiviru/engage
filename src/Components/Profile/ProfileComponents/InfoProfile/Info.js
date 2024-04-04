@@ -4,9 +4,9 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import WorkOutlineRoundedIcon from '@mui/icons-material/WorkOutlineRounded';
 import Info3 from "../../../../assets/Info-Dp/img-3.jpg"
-import { updateProfile } from '../../../../api/userService';
+import { updateProfile, update } from '../../../../api/userService';
 import {useSelector} from 'react-redux'
-import { Cloudinary } from "@cloudinary/url-gen";
+import axios from 'axios';
 
 
 import {LiaEdit} from "react-icons/lia"
@@ -37,19 +37,21 @@ const Info = ({userPostData,
 
   
   const handleFile1=(e)=>{
+    
     if(e.target.files && e.target.files[0]){
       let img =e.target.files[0];
       const formData = new FormData();
-      formData.append('image', img);
-      console.log({userData})
-      const requestBody = {
-        email: userData.email,
-        ProfileImage: img
-      }
+      formData.append('my_file', img);
+      formData.append('email', userData.email);
+      console.log({userData});
       const fetchData = async () => {
         try {
-          const response = await updateProfile(requestBody);
-          console.log("res:",response.data)
+          // const response = await update(formData);
+          const response = await axios.put(
+            "http://localhost:5000/api/updateProfileImages",
+            formData
+          );
+          console.log("res in profile info:",response.data)
         } catch (error) {
           console.error('Error fetching user data:', error);
         }
