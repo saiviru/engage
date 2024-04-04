@@ -7,7 +7,10 @@
     "dob": "11/12/1997",
     "joiningDate": "01/09/2021" ,
     "skills": ["React","Html","css","javascript"],
-    "role" : 1
+    "role" : 1,
+    "jobRole": "Software Engineer",
+    "ProfileImage": " ",
+    "ProfileImage1": " "
   }, {
     "id": 2,
     "empId" : "SIL-0744",
@@ -17,7 +20,10 @@
     "dob": "11/12/1997",
     "joiningDate":"01/09/2021",
     "skills": ["React","Html","css","javascript"],
-    "role" : 2
+    "role" : 2,
+    "jobRole": "Software Engineer",
+    "ProfileImage": "",
+    "ProfileImage1": " "
   }, {
     "id": 3,
     "name": "Jocelyne Jacqueme",
@@ -27,7 +33,10 @@
     "dob": "11/12/1997",
     "joiningDate": "01/09/2021",
     "skills": ["React","Html","css","javascript"],
-    "role" : 3
+    "role" : 3,
+    "jobRole": "Software Engineer",
+    "ProfileImage": "",
+    "ProfileImage1": ""
   }, {
     "id": 4,
     "name": "Edwina Tidd",
@@ -37,7 +46,10 @@
     "dob": "11/12/1997",
     "joiningDate": "01/09/2021",
     "skills": ["React","Html","css","javascript"],
-    "role" : 3
+    "role" : 3,
+    "jobRole": "Software Engineer",
+    "ProfileImage": " ",
+    "ProfileImage1":  " "
   }, {
     "id": 5,
     "empId" : "SIL-0747",
@@ -47,7 +59,10 @@
     "dob": "11/12/1997",
     "joiningDate": "01/09/2021",
     "skills": ["React","Html","css","javascript"],
-    "role" : 3
+    "role" : 3,
+    "jobRole": "Software Engineer",
+    "ProfileImage": " ",
+    "ProfileImage1": " "
   }, {
     "id": 6,
     "empId" : "SIL-0748",
@@ -57,7 +72,10 @@
     "dob": "11/12/1997",
     "skills": ["React","Html","css","javascript"],
     "joiningDate": "01/09/2021",
-    "role" : 3
+    "role" : 3,
+    "jobRole": "Software Engineer",
+    "ProfileImage": " ",
+    "ProfileImage1": " "
   }, {
     "id": 7,
     "empId" : "SIL-0749",
@@ -67,7 +85,10 @@
     "dob": "11/12/1997",
     "joiningDate": "01/09/2021",
     "skills": ["React","Html","css","javascript"],
-    "role" : 3
+    "role" : 3,
+    "jobRole": "Software Engineer",
+    "ProfileImage": " ",
+    "ProfileImage1": " "
   }, {
     "id": 8,
     "empId" : "SIL-0750",
@@ -77,7 +98,10 @@
     "dob": "11/12/1997",
     "joiningDate": "01/09/2021",
     "skills": ["React","Html","css","javascript"],
-    "role" : 3
+    "role" : 3,
+    "jobRole": "Software Engineer",
+    "ProfileImage": "",
+    "ProfileImage1": ""
   }, {
     "id": 9,
     "empId" : "SIL-0751",
@@ -87,7 +111,10 @@
     "dob": "11/12/1997",
     "joiningDate": "01/09/2021",
     "skills": ["React","Html","css","javascript"],
-    "role" : 3
+    "role" : 3,
+    "jobRole": "Software Engineer",
+    "ProfileImage": " ",
+    "ProfileImage1": " "
   }, {
     "id": 10,
     "empId" : "SIL-0752",
@@ -96,5 +123,47 @@
     "gender": "Male",
     "dob": "11/12/1997",
     "joiningDate": "01/09/2021",
-    "role" : 3
+    "role" : 3,
+    "jobRole": "Software Engineer",
+    "ProfileImage": "",
+    "ProfileImage1": ""
+  },{
+    "id": 90,
+    "empId" : "SIL-0888",
+    "name": "Sai Kiran",
+    "email": "saikiran.boga@sagarsoft.in",
+    "gender": "Male",
+    "dob": "11/12/1997",
+    "joiningDate": "01/09/2021" ,
+    "skills": ["React","Html","css","javascript"],
+    "role" : 1,
+    "jobRole": "Software Engineer",
+    "ProfileImage": "",
+    "ProfileImage1": ""
+  },{
+    "id": 91,
+    "empId" : "SIL-0926",
+    "name": "Atul",
+    "email": "atul.kundwani@sagarsoft.in",
+    "gender": "Male",
+    "dob": "11/12/1997",
+    "joiningDate": "01/09/2021" ,
+    "skills": ["React","Html","css","javascript"],
+    "role" : 1,
+    "jobRole": "Data Analyst",
+    "ProfileImage": "",
+    "ProfileImage1": ""
+  },{
+    "id": 92,
+    "empId" : "SIL-0747",
+    "name": "Aniket",
+    "email": "aniket.paul@sagarsoft.in",
+    "gender": "Male",
+    "dob": "11/12/1997",
+    "joiningDate": "01/09/2021" ,
+    "skills": ["React","Html","css","javascript"],
+    "role" : 1,
+    "jobRole": "UI/UX Designer",
+    "ProfileImage": "",
+    "ProfileImage1": ""
   }]

@@ -2,7 +2,14 @@ const express = require('express');
 const router = express.Router();
 const { MongoClient } = require('mongodb');
 const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
 
+cloudinary.config({
+    cloud_name: 'dmark8mtj',
+    api_key: '628849163324471',
+    api_secret: '9HugmB-7htSK0RrcYfvq6UQJRj4',
+  });
+  const image = './public/image.jpg';
 // Connection URI
 const uri = 'mongodb+srv://sagarsoft:sagarsoft@cluster0.eesz4vc.mongodb.net/';
 const dbName = 'employee-engage';
@@ -81,64 +88,75 @@ router.post('/seed/jobs', async (req, res) => {
       await client.close();
     }
   });
+ 
   router.get('/posts', async (req, res) => {
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-  
+    // const { image } = req.query;
     try {
-      await client.connect();
-      const database = client.db(dbName);
-      const collection = database.collection(postsCollectionName);
+        await client.connect();
+        const database = client.db(dbName);
+        const collection = database.collection(postsCollectionName);
+       
+        const posts = await collection.find({}).toArray();
+
+        if (posts.length > 0) {
+          
+            const postsWithImages = await Promise.all(posts.map(async (post) => {
+                try {
+                    
+                    const uploadedImage = await cloudinary.uploader.upload(image);
+                    return { ...post, imageUrl: uploadedImage.secure_url };
+                } catch (error) {
+                    console.error('Error uploading image to Cloudinary:', error);
+                    
+                    return post;
+                }
+            }));
   
-      // Find all posts in the collection
-      const posts = await collection.find({}).toArray();
-  
-      
-      if (posts.length > 0) {
-        res.status(200).json(posts);
-      } else {
-        // If no posts found, return an empty array
-        res.status(404).json({ message: 'No posts found' });
-      }
+            res.status(200).json(postsWithImages);
+        } else {
+          
+            res.status(404).json({ message: 'No posts found' });
+        }
     } catch (error) {
-      console.error('Error fetching posts:', error);
-      res.status(500).json({ error: 'Internal server error' });
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ error: 'Internal server error' });
     } finally {
-      await client.close();
+        await client.close();
     }
-  });
+});
 
+router.post('/login', async (req, res) => {
+    const { email } = req.body; 
 
-  router.post('/login', async (req, res) => {
-    const { email } = req.body; // Extract email from request body
-  
     // Check if email is provided in the request body
     if (!email) {
-      return res.status(400).json({ error: 'Email is required' });
+        return res.status(400).json({ error: 'Email is required' });
     }
-  
+
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-  
+
     try {
-      await client.connect();
-      const database = client.db(dbName);
-      const collection = database.collection(usersCollectionName);
-  
-      // Find user with the provided email
-      const user = await collection.findOne({ email });
-  
-      if (user) {
-        // If user is found, extract required details and send them in the response
-        const { name, empId, gender, joiningDate, skills, role } = user;
-        res.status(200).json({ name, empId, gender, joiningDate, skills, role });
-      } else {
-        // If user is not found, send 404 Not Found response
-        res.status(404).json({ message: 'User not found' });
-      }
+        await client.connect();
+        const database = client.db(dbName);
+        const collection = database.collection(usersCollectionName);
+
+        // Find user with the provided email
+        const user = await collection.findOne({ email });
+
+        if (user) {
+          
+            const { name, empId, gender, joiningDate, skills, role, jobRole, ProfileImage, ProfileImage1 } = user;
+            res.status(200).json({ name, empId, gender, joiningDate, skills, role, jobRole, ProfileImage, ProfileImage1 });
+        } else {
+            
+            res.status(404).json({ message: 'User not found' });
+        }
     } catch (error) {
-      console.error('Error fetching user details:', error);
-      res.status(500).json({ error: 'Internal server error' });
+        console.error('Error fetching user details:', error);
+        res.status(500).json({ error: 'Internal server error' });
     } finally {
-      await client.close();
+        await client.close();
     }
 });
 
@@ -151,14 +169,14 @@ router.get('/users', async (req, res) => {
         const database = client.db(dbName);
         const collection = database.collection(usersCollectionName);
 
-        // Find all users in the collection
+        
         const users = await collection.find({}).toArray();
 
         if (users.length > 0) {
             // If users found, send them in the response
             res.status(200).json(users);
         } else {
-            // If no users found, return an empty array
+            
             res.status(404).json({ message: 'No users found' });
         }
     } catch (error) {
@@ -179,7 +197,8 @@ router.get('/jobs', async (req, res) => {
         const database = client.db(dbName);
         const collection = database.collection(jobsCollectionName);
 
-        // Find all jobs in the collection
+       
+
         const jobs = await collection.find({}).toArray();
 
         if (jobs.length > 0) {
@@ -196,6 +215,73 @@ router.get('/jobs', async (req, res) => {
         await client.close();
     }
 });
+
+
+
+// Cloudinary configuration
+cloudinary.config({
+    cloud_name: 'your_cloud_name',
+    api_key: 'your_api_key',
+    api_secret: 'your_api_secret'
+});
+
+router.put('/updateProfileImages', async (req, res) => {
+    const { email, ProfileImage, ProfileImage1 } = req.body;
+
+    console.log("hit:", req.body)
+    // Check if email is provided in the request body
+    if (!email) {
+        return res.status(400).json({ error: 'Email is required' });
+    }
+
+    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+    try {
+        await client.connect();
+        const database = client.db(dbName);
+        const collection = database.collection(usersCollectionName);
+
+        // Prepare the update object
+        const updateObj = {};
+        
+
+        // Update user profile images based on email
+        const result = await collection.findOne(
+            { email },
+            { $set: updateObj }
+        );
+        console.log({result});
+
+        if (result.empId!==0 && ProfileImage) {
+            // Upload ProfileImage to Cloudinary
+            const uploadedProfileImage = await cloudinary.uploader.upload(ProfileImage);
+            result.ProfileImage = uploadedProfileImage.secure_url;
+        }
+        if (result.empId!==0 && ProfileImage1) {
+            // Upload ProfileImage1 to Cloudinary
+            const uploadedProfileImage1 = await cloudinary.uploader.upload(ProfileImage1);
+            result.ProfileImage1 = uploadedProfileImage1.secure_url;
+        }
+
+        if (result.ProfileImage !== 0 ) {
+            // If user is found and profile images are updated successfully, send success response
+            res.status(200).json({ message: 'Profile image updated successfully' });
+        } 
+        else if (result.ProfileImage1 !== 0){
+            res.status(200).json({ message: 'cover image updated successfully' });
+        }
+        else {
+            // If user is not found, send 404 Not Found response
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error updating profile images:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    } finally {
+        await client.close();
+    }
+});
+
 
 
 module.exports = router;
