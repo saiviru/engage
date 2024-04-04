@@ -101,7 +101,6 @@ const InfoFriendPost = ({val}) => {
       <div className='post-user'>
           <img src={val.profilepicture} className='p-img' alt="" />
           <h2>{val.username}</h2>
-          <p  className='datePara'>{val.datetime}</p>
       </div>
        
        

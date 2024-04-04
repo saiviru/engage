@@ -123,7 +123,6 @@ const handleDelete=(id)=>{
         <div className='post-user' style={{cursor:"pointer"}}>
             <img src={profileImg} className='p-img' alt="" />
             <h2>{modelDetails.ModelName}</h2>
-            <p className='datePara'>{post.datetime}</p>
         </div>
          
          <div className='delete'>
