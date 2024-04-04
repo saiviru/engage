@@ -1,16 +1,13 @@
 const express = require('express');
 const seedRoutes = require('./routes/seedRoutes');
-var bodyParser = require('body-parser');
-
+const cors = require('cors');
 
 const app = express();
-
-const PORT = process.env.PORT || 3000;
+app.use(cors());
+const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-// Routes
+
 app.use('/api', seedRoutes);
 
 app.listen(PORT, () => {

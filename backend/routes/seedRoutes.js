@@ -146,8 +146,8 @@ router.post('/login', async (req, res) => {
 
         if (user) {
           
-            const { name, empId, gender, joiningDate, skills, role, jobRole, ProfileImage, ProfileImage1 } = user;
-            res.status(200).json({ name, empId, gender, joiningDate, skills, role, jobRole, ProfileImage, ProfileImage1 });
+            const { name, empId, gender,email, joiningDate, skills, role, jobRole, ProfileImage, ProfileImage1 } = user;
+            res.status(200).json({ name, empId, email, gender, joiningDate, skills, role, jobRole, ProfileImage, ProfileImage1 });
         } else {
             
             res.status(404).json({ message: 'User not found' });
@@ -217,14 +217,6 @@ router.get('/jobs', async (req, res) => {
 });
 
 
-
-// Cloudinary configuration
-cloudinary.config({
-    cloud_name: 'your_cloud_name',
-    api_key: 'your_api_key',
-    api_secret: 'your_api_secret'
-});
-
 router.put('/updateProfileImages', async (req, res) => {
     const { email, ProfileImage, ProfileImage1 } = req.body;
 
@@ -263,7 +255,8 @@ router.put('/updateProfileImages', async (req, res) => {
             result.ProfileImage1 = uploadedProfileImage1.secure_url;
         }
 
-        if (result.ProfileImage !== 0 ) {
+        if (result.ProfileImage !== "" ) {
+            console.log("pppp", result)
             // If user is found and profile images are updated successfully, send success response
             res.status(200).json({ message: 'Profile image updated successfully' });
         } 
