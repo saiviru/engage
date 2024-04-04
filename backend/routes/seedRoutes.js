@@ -274,7 +274,41 @@ router.put('/updateProfileImages', async (req, res) => {
         await client.close();
     }
 });
+router.post('/createPost', async (req, res) => {
+    const { image, postId, postTitle, postDesc } = req.body;
 
+    // Check if all required parameters are provided
+    if (!image || !postId || !postTitle || !postDesc) {
+        return res.status(400).json({ error: 'Missing required parameters' });
+    }
+     
+    try {        
+        const uploadedImage = await cloudinary.uploader.upload(image);
+        
+        // Respond with all parameters including the Cloudinary URL
+        res.status(200).json({ image: uploadedImage.secure_url, postId, postTitle, postDesc });
+    } catch (error) {
+        console.error('Error uploading image to Cloudinary:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+router.post('/createJob', async (req, res) => {
+    const { Author, jobTitle, jobDesc, jobId,jobLoc,expReq } = req.body;
+
+    // Check if all required parameters are provided
+    if (!Author || !jobTitle || !jobDesc || !jobId || !jobLoc || !expReq) {
+        return res.status(400).json({ error: 'Missing required parameters' });
+    }
+   
+    try {
+        // Respond with all parameters
+        res.status(200).json({ Author, jobTitle, jobDesc, jobId ,jobLoc,expReq});
+    } catch (error) {
+        console.error('Error creating job:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 
 module.exports = router;
