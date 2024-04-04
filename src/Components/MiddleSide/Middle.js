@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import InputPost from '../Post/InputPost'
 import Homepage from "../Home/Homepage"
 import "../MiddleSide/Middle.css"
+import { getAllPosts } from '../../api/postService'
 
 
 const Middle = ({handleSubmit,
@@ -18,19 +19,18 @@ const Middle = ({handleSubmit,
                 setEmptImg,
                 setFriendsProfile
               }) => {
-    
   
     const [searchResults,setSearchResults] =useState("")
     
-    useEffect(()=>{
-      const searchData = posts.filter((val)=>(
-        (val.body.toLowerCase().includes(search.toLowerCase()))
-       ||
-       (val.username.toLowerCase().includes(search.toLowerCase()))
-       ))
-       setSearchResults(searchData)
+    // useEffect(()=>{
+    //   const searchData = posts.filter((val)=>(
+    //     (val.body.toLowerCase().includes(search.toLowerCase()))
+    //    ||
+    //    (val.username.toLowerCase().includes(search.toLowerCase()))
+    //    ))
+    //    setSearchResults(searchData)
        
-    },[posts,search])
+    // },[posts,search])
   
   return (
     <div className='M-features'>
@@ -47,7 +47,7 @@ const Middle = ({handleSubmit,
         />
 
         <Homepage 
-        posts ={searchResults}
+        posts ={posts}
         setPosts={setPosts}
         setFriendsProfile={setFriendsProfile}
         images={images}
