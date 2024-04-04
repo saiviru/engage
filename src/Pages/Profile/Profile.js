@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSelector, useDispatch } from "react-redux";
 import Left from '../../Components/LeftSide/Left'
 import ProfileMiddle from '../../Components/Profile/ProfileMiddle'
 import Right from '../../Components/RightSide/Right'
@@ -7,6 +8,8 @@ import "../Profile/Profile.css"
 import ProfileImg from "../../assets/profile.jpg"
 
 const Profile = () => {
+
+  let userData = useSelector((state) => state?.login?.users);
 
   const [following,setFollowing] =useState(3)
   const [search,setSearch] =useState("")
@@ -21,13 +24,13 @@ const Profile = () => {
 
   const [modelDetails,setModelDetails] = useState(
     {
-      ModelName:"Vijay",
-      ModelUserName:"@Vijay98",
+      ModelName: userData.name,
+      ModelUserName: userData.empId,
       ModelCountryName:"India",
-      ModelJobName:"Web Developer in Google"
+      ModelJobName: userData.jobRole || "Developer"
     }
   )
-
+    console.log("checking",userData)
   return (
     <div className='interface'>
         <Nav
@@ -35,7 +38,7 @@ const Profile = () => {
         setSearch={setSearch}
         showMenu={showMenu}
         setShowMenu={setShowMenu}
-        profileImg={profileImg}
+        profileImg={userData.name[0]}
         />
       <div className="home">
         <Left 
