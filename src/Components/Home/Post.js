@@ -7,6 +7,8 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import SentimentSatisfiedRoundedIcon from '@mui/icons-material/SentimentSatisfiedRounded';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 import {PiSmileySad} from "react-icons/pi"
 import {IoVolumeMuteOutline} from "react-icons/io5"
@@ -32,6 +34,7 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 const Post = ({post,setPosts,setFriendsProfile,images, posts}) => {
+  const userData = useSelector((state) => state?.login?.users);
 
   const [users,setUsers] = useState([]);
   const [comments,setComments] =useState([]);
@@ -48,6 +51,34 @@ const Post = ({post,setPosts,setFriendsProfile,images, posts}) => {
     setComments(extractedComments);
     return extractedComments;
   };
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      try {
+        // const response = await update(formData);
+        const response = await axios.get(
+          "http://localhost:5000/api/users"
+        );
+        console.log("all users", response.data)
+        setUsers(response.data)
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchData();
+  },[])
+
+  const findUser = (use)=>{
+    let theOne = {};
+    console.log({use, users})
+    users.map((one)=>{
+      if(one.empId === use){
+        theOne = one
+      }
+    })
+    return theOne
+  }
 
   useEffect(() => {
     const extractedComments = extractComments(posts);
@@ -99,7 +130,7 @@ const handleDelete=(id)=>{
 
     const id=comments.length ? comments[comments.length -1].id +1 : 1
     const profilePic =Profile
-    const username="Vijay"
+    const username="Sai Kiran"
     const comment =commentInput
     const time= moment.utc(new Date(), 'yyyy/MM/dd kk:mm:ss').local().startOf('seconds').fromNow()
 
@@ -126,8 +157,8 @@ const handleDelete=(id)=>{
           <div className='post-header'>
             <Link to="/FriendsId" style={{ textDecoration: "none" }}>
               <div className='post-user' onClick={() => handleFriendsId(post.id)} style={{ cursor: "pointer" }}>
-                {/* <img src={post.profilepicture} className='p-img' alt="" /> */}
-                <h2>{post.Author}</h2>
+                <img src={findUser(post.Author)?.ProfileImage} className='p-img' alt="" />
+                <h2>{findUser(post.Author)?.name}</h2>
               </div>
             </Link>
             {/* <div className='delete'>
