@@ -54,10 +54,12 @@ const Home = ({setFriendsProfile}) => {
                    profilepicture:profilepicture,
                    username:username,
                    datetime:datetime,
-                   img:img && (img.img),
-                   body:body,
-                   like:0,
-                   comment:0
+                   imageUrl:img && (img.img),
+                   postDesc:body,
+                   postLikes:[],
+                   comments:[],
+                   postLikeCount:0,
+
                   }
 
         console.log("post adding:",obj);

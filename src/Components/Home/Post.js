@@ -144,7 +144,7 @@ const handleDelete=(id)=>{
             </div> */}
           </div>
           <p className='body'>{post.postDesc.length <= 300 ? post.postDesc : `${post.postDesc.slice(0, 300)}...`}</p> 
-          {/* {post.img && <img src={post.img} alt="" className="post-img" />} */}
+          {post.image && <img src={post.image} alt="" className="post-img" />}
           <div className="post-foot">
             <div className="post-footer">
               <div className="like-icons">
@@ -154,7 +154,7 @@ const handleDelete=(id)=>{
               </div>
               <div className="like-comment-details">
                 <span className='post-like'>{post.postLikeCount} people like it,</span>
-                <span className='post-comment'>{post.comments[0].commentCount} comments</span>
+                <span className='post-comment'>{post?.comments[0]?.commentCount || 0} comments</span>
               </div>
               {showComment && (
                 <div className="commentSection">

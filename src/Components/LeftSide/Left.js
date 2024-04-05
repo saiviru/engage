@@ -17,6 +17,7 @@ const Left = ({profileImg,
                modelDetails
               }) => {
                 const userData = useSelector((state) => state?.login?.users);
+                console.log("from left", userData)
 
   const [btnActive,setBtnActive] =useState("#")
   const [logOutExit,setLogOutExit] =useState(false)

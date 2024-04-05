@@ -340,9 +340,9 @@ router.put(
       if (result.ProfileImage !== "") {
         console.log("pppp", result);
         // If user is found and profile images are updated successfully, send success response
-        res.status(200).json({ message: "Profile image updated successfully" });
+        res.status(200).json({ message: "Profile image updated successfully", data: result  });
       } else if (result.ProfileImage1 !== 0) {
-        res.status(200).json({ message: "cover image updated successfully" });
+        res.status(200).json({ message: "cover image updated successfully", data: result });
       } else {
         // If user is not found, send 404 Not Found response
         res.status(404).json({ message: "User not found" });
