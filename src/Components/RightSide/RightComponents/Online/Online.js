@@ -145,7 +145,7 @@ const Online = () => {
               onChange={handleChange}
               fullWidth
             />
-            <Button type="submit" variant="contained" color="primary" style={{ marginTop: '10px' }}>Submit</Button>
+            <Button type="submit" variant="contained" color="primary" style={{ marginTop: '10px' }}>Submitted</Button>
           </form>
         </div>
       </Modal>

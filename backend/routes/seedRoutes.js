@@ -364,7 +364,6 @@ router.put("/coverImage", upload.single("my_file"), async (req, res) => {
   if (!email) {
     return res.status(400).json({ error: "Email is required" });
   }
-
   const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -443,6 +442,30 @@ router.post("/createPost", upload.single("my_file"), async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+router.post('/updatePost', async (req, res) => {
+  try {
+  
+    const { postId, postTitle, postDesc, image } = req.body;
+
+    
+    if (!postId || !postTitle || !postDesc || !image) {
+      return res.status(400).json({ error: 'Missing required parameters' });
+    }
+
+  
+    const b64 = Buffer.from(image, 'base64');
+
+    const uploadedImage = await handleUpload(b64);
+
+    
+    res.status(200).json({ image: uploadedImage.secure_url, postId, postTitle, postDesc });
+  } catch (error) {
+    console.error('Error updating post:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+  
 
 router.post("/createJob", async (req, res) => {
   const { Author, jobTitle, jobDesc, jobId, jobLoc, expReq } = req.body;
