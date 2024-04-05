@@ -13,3 +13,8 @@ export const updateProfile = (userData) => {
   console.log({userData})
   return axiosInstance.put(`/updateProfileImages`, userData);
 }
+
+export const update = (userData) => {
+  console.log("update:",{userData})
+  return axiosInstance.post(`/upload`, userData);
+}

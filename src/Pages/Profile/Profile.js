@@ -10,7 +10,7 @@ import ProfileImg from "../../assets/profile.jpg"
 const Profile = () => {
 
   let userData = useSelector((state) => state?.login?.users);
-
+  console.log({userData});
   const [following,setFollowing] =useState(3)
   const [search,setSearch] =useState("")
 
@@ -30,7 +30,6 @@ const Profile = () => {
       ModelJobName: userData.jobRole || "Developer"
     }
   )
-    console.log("checking",userData)
   return (
     <div className='interface'>
         <Nav

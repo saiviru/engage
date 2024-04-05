@@ -32,7 +32,6 @@ const Nav = ({ search, setSearch, setShowMenu, profileImg }) => {
     setAnchorEl(null);
   };
   let userData = useSelector((state) => state?.login?.users);
-  console.log("nav check", userData)
 
   return (
     <nav>
