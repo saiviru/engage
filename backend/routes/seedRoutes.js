@@ -356,75 +356,88 @@ router.put(
   }
 );
 
-router.put(
-  "/coverImage",
-  upload.single("my_file"),
-  async (req, res) => {
-    const file = req.file;
-    const email = req.body.email;
-    console.log("hit:", { file, email });
-    // Check if email is provided in the request body
-    if (!email) {
-      return res.status(400).json({ error: "Email is required" });
-    }
-
-    const client = new MongoClient(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-
-    try {
-      await client.connect();
-      const database = client.db(dbName);
-      const collection = database.collection(usersCollectionName);
-
-      // Prepare the update object
-      const updateObj = {};
-
-      // Update user profile images based on email
-      const result = await collection.findOne({ email }, { $set: updateObj });
-      console.log({ result });
-      const base64String = req.file.buffer.toString("base64");
-      console.log(typeof req.file);
-      // console.log({base64String});
-
-      if (result.empId !== 0 && file) {
-        const uploadedProfileImage = await cloudinary.uploader.upload(
-          `data:${req.file.mimetype};base64,${base64String}`
-        );
-        result.ProfileImage1 = uploadedProfileImage.secure_url;
-      }
-      await collection.updateOne({ email }, { $set: result });
-
-      if (result.ProfileImage !== "") {
-        res.status(200).json({ message: "cover image updated successfully", data: result });
-      } else {
-        // If user is not found, send 404 Not Found response
-        res.status(404).json({ message: "User not found" });
-      }
-    } catch (error) {
-      console.error("Error updating cover image:", error);
-      res.status(500).json({ error: "Internal server error" });
-    } finally {
-      await client.close();
-    }
+router.put("/coverImage", upload.single("my_file"), async (req, res) => {
+  const file = req.file;
+  const email = req.body.email;
+  console.log("hit:", { file, email });
+  // Check if email is provided in the request body
+  if (!email) {
+    return res.status(400).json({ error: "Email is required" });
   }
-);
-router.post("/createPost", async (req, res) => {
-  const { image, postId, postTitle, postDesc } = req.body;
 
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+
+  try {
+    await client.connect();
+    const database = client.db(dbName);
+    const collection = database.collection(usersCollectionName);
+
+    // Prepare the update object
+    const updateObj = {};
+
+    // Update user profile images based on email
+    const result = await collection.findOne({ email }, { $set: updateObj });
+    console.log({ result });
+    const base64String = req.file.buffer.toString("base64");
+    console.log(typeof req.file);
+    // console.log({base64String});
+
+    if (result.empId !== 0 && file) {
+      const uploadedProfileImage = await cloudinary.uploader.upload(
+        `data:${req.file.mimetype};base64,${base64String}`
+      );
+      result.ProfileImage1 = uploadedProfileImage.secure_url;
+    }
+    await collection.updateOne({ email }, { $set: result });
+
+    if (result.ProfileImage !== "") {
+      res
+        .status(200)
+        .json({ message: "cover image updated successfully", data: result });
+    } else {
+      // If user is not found, send 404 Not Found response
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error updating cover image:", error);
+    res.status(500).json({ error: "Internal server error" });
+  } finally {
+    await client.close();
+  }
+});
+router.post("/createPost", upload.single("my_file"), async (req, res) => {
+  await client.connect();
+  const database = client.db(dbName);
+  const collection = database.collection(postsCollectionName);
+  const { postId, postTitle, postDesc } = req.body;
+  const image = req.file;
   // Check if all required parameters are provided
   if (!image || !postId || !postTitle || !postDesc) {
     return res.status(400).json({ error: "Missing required parameters" });
   }
+  const base64String = req.file.buffer.toString("base64");
 
   try {
-    const uploadedImage = await cloudinary.uploader.upload(image);
-
-    // Respond with all parameters including the Cloudinary URL
+    if (image) {
+      let uploadedImage;
+      uploadedImage = await cloudinary.uploader.upload(
+        `data:${req.file.mimetype};base64,${base64String}`
+      );
+    }
+    const newPost = {
+      postId,
+      postTitle,
+      postDesc,
+      imageUrl: uploadedImage.secure_url  
+    };
+    const result = await collection.insertOne(newPost);
+    console.log("post created:", result)
     res
       .status(200)
-      .json({ image: uploadedImage.secure_url, postId, postTitle, postDesc });
+      .json({ indertedPost: result.ops[0] });
   } catch (error) {
     console.error("Error uploading image to Cloudinary:", error);
     res.status(500).json({ error: "Internal server error" });

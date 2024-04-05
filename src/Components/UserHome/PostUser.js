@@ -34,7 +34,7 @@ import moment from 'moment';
 
 
 const PostUser = ({posts,post,setPosts,profileImg,modelDetails,images}) => {
-
+  console.log("post user", posts, post)
   const [comments,setComments] =useState([
     {
         id:1,
@@ -142,8 +142,8 @@ const handleDelete=(id)=>{
     
     }
         <p className='body'>{
-        (post.body).length <=300 ?
-        post.body : `${(post.body).slice(0,300)}...`
+        (post.postDesc).length <=300 ?
+        post.postDesc : `${(post.postDesc).slice(0,300)}...`
         }</p>
 
         {post.img && (<img src={post.img} alt="" className="post-img" />)}

@@ -2,6 +2,7 @@ import React from 'react'
 
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import {useSelector} from 'react-redux'
 
 
 const ProfileInputPost = ({handleSubmit,
@@ -12,16 +13,18 @@ const ProfileInputPost = ({handleSubmit,
                             profileImg,
                             modelDetails
                         }) => {
+                          const userData = useSelector((state) => state?.login?.users);
+
   return (
     <div className="i-form">
         <form onSubmit={handleSubmit}>
             <div className="i-input-box">
-                <img src={profileImg} className='i-img'/>
+                <img src={userData.ProfileImage} className='i-img'/>
                 
                 <input 
                 type="text" 
                 id="i-input" 
-                placeholder={`What's in your mind ${modelDetails.ModelName}?`}
+                placeholder={`What's in your mind ${userData.name}?`}
                 required
                 value={body}
                 onChange={(e)=>setBody(e.target.value)}

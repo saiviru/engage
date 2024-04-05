@@ -32,7 +32,6 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 const Post = ({post,setPosts,setFriendsProfile,images, posts}) => {
-  console.log({posts})
 
   const [users,setUsers] = useState([]);
   const [comments,setComments] =useState([]);

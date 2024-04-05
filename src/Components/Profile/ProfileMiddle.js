@@ -34,15 +34,29 @@ const ProfileMiddle = ({
   const [importFile, setImportFile] = useState("");
 
   function filterPostsByAuthor(posts, author) {
-    return posts.filter(post => post.Author === author);
+    let totalUserPosts = [];
+    posts.map((one)=>{
+      if (one.author === author){
+        totalUserPosts.push(one);
+      }
+    })
+    console.log({totalUserPosts})
+    return totalUserPosts;
   }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getAllPosts();
+        let actualUserPosts = [];
         if (response.data.length>0) {
-          setUserPostData(filterPostsByAuthor(response.data, userData.Author))
+          response.data.map((one)=>{
+            if(one.Author === userData.Author){
+              actualUserPosts.push(one); 
+            }
+          });
+          setUserPostData(filterPostsByAuthor(actualUserPosts));
+          console.log({actualUserPosts})
           // dispatch(loginSuccess());
           // dispatch(addUser(response.data));
           // navigate("/home");
@@ -131,7 +145,7 @@ const ProfileMiddle = ({
         modelDetails={modelDetails}
         profileImg={profileImg}
         setUserPostData={setUserPostData}
-        userPostData={searchResults}
+        userPostData={userPostData}
         images={images}
       />
     </div>

@@ -8,6 +8,7 @@ import {BsBookmark} from "react-icons/bs"
 import {RiFileListLine} from "react-icons/ri"
 import {FiSettings} from "react-icons/fi"
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { useSelector } from 'react-redux'
 
 import Profile from "../../assets/profile.jpg"
 
@@ -15,6 +16,7 @@ import Profile from "../../assets/profile.jpg"
 const Left = ({profileImg,
                modelDetails
               }) => {
+                const userData = useSelector((state) => state?.login?.users);
 
   const [btnActive,setBtnActive] =useState("#")
   const [logOutExit,setLogOutExit] =useState(false)
@@ -66,19 +68,19 @@ const Left = ({profileImg,
           <div className="user-name-userid">
             <img src={profileImg ? (profileImg) : Profile} alt="" />
               <div className='L-user'>
-                <h1>{modelDetails ? (modelDetails.ModelName) : "Vijay"}</h1>
-                <span>{modelDetails ? (modelDetails.ModelUserName) : "@vijay98"}</span>
+                <h1>{modelDetails ? (userData.name) : "Sai Kiran"}</h1>
+                <span>{modelDetails ? (userData.empId) : "SIL-0888"}</span>
             </div>
           </div>
         </Link>
-        <MoreHorizIcon onClick={()=>setLogOutExit(!logOutExit)} className='vert'/>
+        {/* <MoreHorizIcon onClick={()=>setLogOutExit(!logOutExit)} className='vert'/>
           
           {logOutExit && (
             <div className="logOutExitContainer">
               <button>Add an existing account</button>
               <Link to="/" style={{width:"100%"}}><button>Log out @vijay98</button></Link>
             </div>
-          )}
+          )} */}
       </div>
 
     </div>

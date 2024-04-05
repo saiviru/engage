@@ -1,5 +1,6 @@
 import {  useState, useEffect } from 'react'
 import Profile from "../../assets/profile.jpg"
+import {useSelector} from 'react-redux'
 
 import { getAllPosts } from '../../api/postService'
 import "../Home/Home.css"
@@ -11,6 +12,7 @@ import Nav from '../../Components/Navigation/Nav'
 import moment from 'moment/moment'
 
 const Home = ({setFriendsProfile}) => {
+  const userData = useSelector((state) => state?.login?.users);
   
   useEffect(() => {
     const fetchData = async () => {
@@ -38,14 +40,13 @@ const Home = ({setFriendsProfile}) => {
       const [body,setBody] =useState("")
       const [importFile,setImportFile] =useState("")
       
-
       const handleSubmit =(e)=>{
         e.preventDefault()
         
         
         const id =posts.length ? posts[posts.length -1].id +1 :1
-        const username="Vijay"
-        const profilepicture=Profile
+        const username=userData.name
+        const profilepicture=userData.ProfileImage
         const datetime=moment.utc(new Date(), 'yyyy/MM/dd kk:mm:ss').local().startOf('seconds').fromNow()
         const img =images ? {img:URL.createObjectURL(images)} : null
         
@@ -59,7 +60,7 @@ const Home = ({setFriendsProfile}) => {
                    comment:0
                   }
 
-        
+        console.log("post adding:",obj);
 
         const insert =[...posts,obj]
         setPosts(insert)
