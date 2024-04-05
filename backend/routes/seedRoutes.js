@@ -410,26 +410,90 @@ router.put(
     }
   }
 );
-router.post("/createPost", async (req, res) => {
-  const { image, postId, postTitle, postDesc } = req.body;
+// router.post("/createPost", async (req, res) => {
+//   const { image, postId, postTitle, postDesc } = req.body;
 
-  // Check if all required parameters are provided
-  if (!image || !postId || !postTitle || !postDesc) {
-    return res.status(400).json({ error: "Missing required parameters" });
+//   // Check if all required parameters are provided
+//   if (!image || !postId || !postTitle || !postDesc) {
+//     return res.status(400).json({ error: "Missing required parameters" });
+//   }
+
+//   try {
+//     const uploadedImage = await cloudinary.uploader.upload(image);
+
+//     // Respond with all parameters including the Cloudinary URL
+//     res
+//       .status(200)
+//       .json({ image: uploadedImage.secure_url, postId, postTitle, postDesc });
+//   } catch (error) {
+//     console.error("Error uploading image to Cloudinary:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+
+
+router.post('/createPost', async (req, res) => {
+    try {
+      // Extract parameters from the request body
+      const { postId, postTitle, postDesc, image } = req.body;  
+    
+      if (!postId || !postTitle || !postDesc || !image) {
+        return res.status(400).json({ error: 'Missing required parameters' });
+      }
+       
+      const b64 = Buffer.from(image, 'base64');
+  
+      // Upload the image to Cloudinary
+      const uploadedImage = await handleUpload(b64);
+  
+    
+      res.status(200).json({ image: uploadedImage.secure_url, postId, postTitle, postDesc });
+    } catch (error) {
+      console.error('Error creating post:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  
+  // Function to handle image upload to Cloudinary
+  async function handleUpload(file) {
+    const res = await cloudinary.uploader.upload(file, {
+      resource_type: "auto"
+    });
+    return res;
   }
+  
 
-  try {
-    const uploadedImage = await cloudinary.uploader.upload(image);
-
-    // Respond with all parameters including the Cloudinary URL
-    res
-      .status(200)
-      .json({ image: uploadedImage.secure_url, postId, postTitle, postDesc });
-  } catch (error) {
-    console.error("Error uploading image to Cloudinary:", error);
-    res.status(500).json({ error: "Internal server error" });
+  router.post('/updatePost', async (req, res) => {
+    try {
+    
+      const { postId, postTitle, postDesc, image } = req.body;
+  
+      
+      if (!postId || !postTitle || !postDesc || !image) {
+        return res.status(400).json({ error: 'Missing required parameters' });
+      }
+  
+    
+      const b64 = Buffer.from(image, 'base64');
+  
+      const uploadedImage = await handleUpload(b64);
+  
+      
+      res.status(200).json({ image: uploadedImage.secure_url, postId, postTitle, postDesc });
+    } catch (error) {
+      console.error('Error updating post:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  
+  // Function to handle image upload to Cloudinary
+  async function handleUpload(file) {
+    const res = await cloudinary.uploader.upload(file, {
+      resource_type: "auto"
+    });
+    return res;
   }
-});
+  
 
 router.post("/createJob", async (req, res) => {
   const { Author, jobTitle, jobDesc, jobId, jobLoc, expReq } = req.body;
