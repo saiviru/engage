@@ -14,7 +14,6 @@ import { AiOutlineHome } from "react-icons/ai";
 import { LiaUserFriendsSolid } from "react-icons/lia";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { TbMessage } from "react-icons/tb";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Logo from "../../assets/logo.png";
 
 const Nav = ({ search, setSearch, setShowMenu, profileImg }) => {
@@ -28,7 +27,8 @@ const Nav = ({ search, setSearch, setShowMenu, profileImg }) => {
   };
   let userData = useSelector((state) => state?.login?.users);
   const tooltip = (
-    <Tooltip id="home-tooltip">Home</Tooltip>
+    <></>
+    // <Tooltip id="home-tooltip">Home</Tooltip>
   );
   return (
     <nav>
