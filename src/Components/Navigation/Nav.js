@@ -1,16 +1,12 @@
 import React from "react";
 import "../Navigation/Nav.css";
-import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
-import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useSelector, useDispatch } from "react-redux";
 
@@ -18,8 +14,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { LiaUserFriendsSolid } from "react-icons/lia";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { TbMessage } from "react-icons/tb";
-
-import Profile from "../../assets/profile.jpg";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Logo from "../../assets/logo.png";
 
 const Nav = ({ search, setSearch, setShowMenu, profileImg }) => {
@@ -32,7 +27,9 @@ const Nav = ({ search, setSearch, setShowMenu, profileImg }) => {
     setAnchorEl(null);
   };
   let userData = useSelector((state) => state?.login?.users);
-
+  const tooltip = (
+    <Tooltip id="home-tooltip">Home</Tooltip>
+  );
   return (
     <nav>
       <div className="n-logo" style={{ display: "flex" }}>
@@ -46,7 +43,7 @@ const Nav = ({ search, setSearch, setShowMenu, profileImg }) => {
           className="logo"
           style={{ color: "black", textDecoration: "none" }}
         >
-          <h1>SAGARSOFT</h1>
+          <h1>SAGAR <span>ENGAGE</span></h1>
         </Link>
       </div>
 
@@ -62,18 +59,19 @@ const Nav = ({ search, setSearch, setShowMenu, profileImg }) => {
             color: "white",
           }}
         >
-          <AiOutlineHome className="nav-icons" />
+          <AiOutlineHome className="nav-icons" title="Home"/>
         </Link>
 
         <Link to="/notification" id="notifi" style={{ marginTop: "8px" }}>
-          <IoNotificationsOutline className="nav-icons" />
+          <IoNotificationsOutline className="nav-icons" title="Notification"/>
           <span>5</span>
         </Link>
 
-        <TbMessage className="nav-icons" />
+        <TbMessage className="nav-icons" title="Chat"/>
         <LiaUserFriendsSolid
           className="nav-icons"
           onClick={() => setShowMenu(true)}
+          title="Groups"
         />
       </div>
 
