@@ -57,7 +57,7 @@ const InputPost = ({handleSubmit,
             type="file" 
             id="file"
             accept=".png,jpeg,.jpg"
-            onChange={(e)=>handleFileUpload}
+            onChange={(e)=>{handleFileUpload(e); setImages(e.target.files[0])}}
              />
           </div>
 
