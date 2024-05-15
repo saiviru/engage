@@ -94,6 +94,7 @@ router.post('/seed/jobs', async (req, res) => {
   
       
       if (posts.length > 0) {
+        console.log("posts data sent")
         res.status(200).json(posts);
       } else {
         // If no posts found, return an empty array

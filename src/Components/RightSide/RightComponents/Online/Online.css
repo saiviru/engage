@@ -1,0 +1,141 @@
+.online-comp{
+    width: 100%;
+    min-height: 200px;
+    padding: 10px 10px 5px 20px;
+    border-radius: 20px;
+    background-color: #fff;
+    margin-top: 10px;
+}
+.online-comp h2{
+    font-size: 16px;
+    color: grey;
+    font-weight: 500;
+    background: white;
+    border-radius: 10px;
+    padding: 10px 10px;
+    margin-top: 17px;
+}
+.online-people{
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+.online-people img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50px;
+}
+.online-people::before{
+    content: "";
+   position: absolute;
+   background-color:green;
+   width: 12px;
+   height: 12px;
+   top: 2px;
+   left:34px;
+   border-radius: 50%;
+}
+@media screen and (max-width:1024px){
+    .online-comp{
+        width: 100%;
+        min-height: 200px;
+        padding: 10px 8px 10px 8px;
+        border-radius: 10px;
+        background-color: #fff;
+        margin-top: 5px;
+    }
+    .online-comp h2{
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    .online-people{
+        margin-bottom: 16px;
+        gap: 15px;
+    }
+    .online-people img{
+        width: 40px;
+        height: 40px;
+    }
+    .online-people::before{
+       content: "";
+       position: absolute;
+       background-color:green;
+       width: 10px;
+       height: 10px;
+       top: 2px;
+       left:30px;
+       border-radius: 50%;
+    }
+}
+@media screen and (max-width:768px){
+    .online-comp{
+        width: 100%;
+        min-height: 200px;
+        padding: 10px 10px 5px 20px;
+        border-radius: 20px;
+        background-color: #fff;
+        margin-top: 10px;
+    }
+    .online-comp h2{
+        font-size: 16px;
+        margin-top: 10px;
+        margin-bottom: 30px;
+        color: grey;
+        font-weight: 500;
+    }
+    .online-people{
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+    }
+    .online-people img{
+        width: 45px;
+        height: 45px;
+        border-radius: 50px;
+    }
+    .online-people::before{
+        content: "";
+       position: absolute;
+       background-color:green;
+       width: 12px;
+       height: 12px;
+       top: 2px;
+       left:34px;
+       border-radius: 50%;
+    }
+}
+
+/* Online.css */
+.modal-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 80%;
+    max-height: 80%;
+    overflow-y: auto;
+  }
+  
+  .modal-container h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  
+  .modal-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .modal-container form > * {
+    margin-bottom: 20px;
+  }
+  
